@@ -1,8 +1,9 @@
 // imports here for express and pg
 const express = require("express");
 const app = express();
-const path = require("path");
+// const path = require("path");
 const pg = require("pg");
+const morgan = require("morgan");
 // static routes here (you only need these for deployment)
 const client = new pg.Client(
   process.env.DATABASE_URL || "postgres://localhost/acme_hr_directory",
@@ -99,13 +100,13 @@ const init = async () => {
 
   SQL = ` INSERT INTO departments(name) VALUES('FOH');
     INSERT INTO departments(name) VALUES('BOH');
-    INSERT INTO departments(name) VALUES('MGMT');
+    INSERT INTO departments(name) VALUES('MNMT');
     
-    INSERT INTO employees(name, department_id) VALUES('hugh peck', (SELECT id FROM departments WHERE name='Pick'));
-    INSERT INTO employees(name, department_id) VALUES('johnny b', (SELECT id FROM departments WHERE name='Pick'));
-    INSERT INTO employees(name, department_id) VALUES('Tequill jose', (SELECT id FROM departments WHERE name='Pack'));
-    INSERT INTO employees(name, department_id) VALUES('Ginnie Ton', (SELECT id FROM departments WHERE name='Ship Dock'));
-    INSERT INTO employees(name, department_id) VALUES('Tito Vod', (SELECT id FROM departments WHERE name='Ship Dock'));`;
+    INSERT INTO employees(name, department_id) VALUES('hugh peck', (SELECT id FROM departments WHERE name='FOH'));
+    INSERT INTO employees(name, department_id) VALUES('johnny b', (SELECT id FROM departments WHERE name='MNMT'));
+    INSERT INTO employees(name, department_id) VALUES('Tequill jose', (SELECT id FROM departments WHERE name='BOH'));
+    INSERT INTO employees(name, department_id) VALUES('Ginnie Ton', (SELECT id FROM departments WHERE name='MNMT'));
+    INSERT INTO employees(name, department_id) VALUES('Tito Vod', (SELECT id FROM departments WHERE name='FOH'));`;
   await client.query(SQL);
   console.log("data seeded");
 
